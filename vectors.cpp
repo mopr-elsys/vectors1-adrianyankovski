@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cmath>
+
 using namespace std;
 
 struct Point {
@@ -20,39 +21,58 @@ public:
 
     // this function should return the sum of the current vector and another "other" as a new Vector
     Vector sum(const Vector& other) const {
-        return Vector(0, 0);
+        return Vector(x+other.x,y+other.y);
     }
 
     // this function should return the difference of the current vector and another "other" as a new Vector
     Vector difference(const Vector& other) const {
-        return Vector(0, 0);
+        return Vector(x-other.x,y-other.y);
     }
 
     // this function should return a boolean value, answering the question whether the current vector and another "other" are collinear
     bool is_colinear(const Vector& other) const {
-        return false;
+        
+        if((x*other.y)-(y*other.x) == 0){
+            return true;
+        }else{
+            return false;
+        }
+        /*if(x/other.x==y/other.y){
+            return true;
+        }else{
+            return false;
+        }*/
     }
 
     // this function should return the length of the current vector
-    double length() const {
-        return 0;
+    double length(const Vector& other) const {
+
+        return (sqrt ( ((other.x-x)*2)+((other.y - y)*2) ) );
     }
 
     // this function should return the angle between the current vector and another "other"
     double angle(const Vector& other) const {
-        return 0;
+        //return (acos(x * (y * sqrt(other.y) ) ) );
+        return  atan2(y - other.y, x - other.x);
+        //((x * other.x + y * other.y) / (sqrt(x*x + y*y) * sqrt(other.x*other.x + other.y*other.y)));
+    
     }
 
     // this is for printing the vector
     friend ostream& operator<<(ostream& os, const Vector& c);
     // this is for entering the vector
     friend istream& operator>>(istream& in, Vector& v);
+    
 };
 
 
 // this function should find the area of the triangle made up of the three points p1, p2, p3
 double area(const Point& p1, const Point& p2, const Point& p3) {
-    return 0;
+    double  A=sqrt(((p2.x-p1.x)*(p2.x-p1.x))+((p2.y-p1.y)*(p2.y-p1.y)));
+    double B=sqrt(((p3.x-p2.x)*(p3.x-p2.x))+((p3.y-p2.y)*(p3.y-p2.y)));
+    double C=sqrt(((p1.x-p3.x)*(p1.x-p3.x))+((p1.y-p3.y)*(p1.y-p3.y)));
+    return ((A+B+C)/2);
+
 }
 
 // this function should find the area of the figure made up of up to 50 points
@@ -96,7 +116,7 @@ void vectors() {
     cout << v1 << " + " << v2 << " = " << v1.sum(v2) << endl;
     cout << v1 << " - " << v2 << " = " << v1.difference(v2) << endl;
     cout << "Colinear: " << v1.is_colinear(v2) << endl;
-    cout << "Length: " << v1.length() << endl;
+    cout << "Length: " << v1.length(v2) << endl;
     cout << "Angle: " << v1.angle(v2) * 180 / 3.1415926536 << "°" << endl;
 }
 
